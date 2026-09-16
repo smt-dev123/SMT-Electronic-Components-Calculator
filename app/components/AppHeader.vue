@@ -19,11 +19,6 @@
               >
                 ឧបករណ៍គណនាអេឡិចត្រូនិក
               </h1>
-              <span
-                class="hidden sm:inline-block px-2 py-0.5 text-[10px] font-mono bg-cyan-500/10 text-cyan-400 border border-cyan-500/30 rounded-full font-semibold"
-              >
-                Nuxt 4
-              </span>
             </div>
             <p class="text-[11px] text-slate-400">
               Electronics Component Calculator Suite Pro
@@ -120,7 +115,7 @@
             v-for="tab in tabs"
             :key="tab.path"
             :to="tab.path"
-            class="flex-shrink-0 px-3.5 py-2 rounded-xl flex items-center gap-2 whitespace-nowrap transition-all duration-200 text-xs font-semibold"
+            class="flex-shrink-0 px-3.5 py-2 rounded-xl flex items-center gap-2 whitespace-nowrap transition-all duration-200 text-sm font-semibold"
             :class="
               isActive(tab.path)
                 ? 'bg-gradient-to-r from-cyan-500 to-cyan-600 text-slate-950 font-bold shadow-md shadow-cyan-500/20'
@@ -258,6 +253,13 @@ const tabs = [
     nameKh: "PCB Trace",
     nameEn: "Trace",
     icon: "LucideRuler",
+  },
+  { path: "/crystal", nameKh: "Crystal", nameEn: "XTAL", icon: "LucideCpu" },
+  {
+    path: "/lc-filter",
+    nameKh: "LC Filter",
+    nameEn: "Filter",
+    icon: "LucideWaves",
   },
 ];
 

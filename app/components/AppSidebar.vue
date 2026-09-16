@@ -98,6 +98,8 @@ const menuItems = [
   { path: "/transformer", nameKh: "Transformer", icon: "LucideRotateCw" },
   { path: "/pcb-trace", nameKh: "PCB Trace Width", icon: "LucideRuler" },
   { path: "/pid", nameKh: "PID Controller", icon: "LucideActivity" },
+  { path: "/crystal", nameKh: "Crystal Oscillator", icon: "LucideCpu" },
+  { path: "/lc-filter", nameKh: "LC Filter", icon: "LucideWaves" },
   { path: "/history", nameKh: "ប្រវត្តិ", icon: "LucideClock" },
   { path: "/favorites", nameKh: "ចំណូលចិត្ត", icon: "LucideStar" },
   { path: "/tools", nameKh: "ឧបករណ៍ផ្សេងៗ", icon: "LucideToolbox" },

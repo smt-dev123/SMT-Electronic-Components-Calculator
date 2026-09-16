@@ -263,5 +263,25 @@ const categories = [
       },
     ],
   },
+  {
+    name: "RF & Timing",
+    icon: "LucideRadio",
+    tools: [
+      {
+        path: "/crystal",
+        nameKh: "Crystal Oscillator",
+        nameEn: "Crystal",
+        icon: "LucideCpu",
+        desc: "Load Caps, Resonance, Pullability",
+      },
+      {
+        path: "/lc-filter",
+        nameKh: "LC Filter",
+        nameEn: "LC Filter",
+        icon: "LucideWaves",
+        desc: "Cutoff, Q Factor, Band-Pass, Attenuation",
+      },
+    ],
+  },
 ];
 </script>
