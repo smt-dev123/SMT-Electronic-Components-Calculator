@@ -217,6 +217,36 @@ const tabs = [
     nameEn: "Timer",
     icon: "LucideClock",
   },
+  {
+    path: "/op-amp",
+    nameKh: "Op-Amp",
+    nameEn: "Op-Amp",
+    icon: "LucideAudioLines",
+  },
+  {
+    path: "/regulator",
+    nameKh: "Regulator",
+    nameEn: "Regulator",
+    icon: "LucideBattery",
+  },
+  {
+    path: "/relay",
+    nameKh: "Relay",
+    nameEn: "Relay",
+    icon: "LucideToggleRight",
+  },
+  {
+    path: "/battery",
+    nameKh: "Battery",
+    nameEn: "Battery",
+    icon: "LucideBatteryFull",
+  },
+  {
+    path: "/transformer",
+    nameKh: "Transformer",
+    nameEn: "Transformer",
+    icon: "LucideRotateCw",
+  },
 ];
 
 const isActive = (path: string) => route.path === path;

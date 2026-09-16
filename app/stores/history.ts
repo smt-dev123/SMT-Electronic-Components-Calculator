@@ -7,7 +7,8 @@ export interface CalculationRecord {
     | "diode"
     | "transistor"
     | "mosfet"
-    | "optocoupler";
+    | "optocoupler"
+    | "transformer";
   title: string;
   value: string;
   input: Record<string, any>;

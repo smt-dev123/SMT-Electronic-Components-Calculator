@@ -95,6 +95,11 @@ const menuItems = [
   { path: "/led", nameKh: "LED", icon: "LucideLightbulb" },
   { path: "/divider", nameKh: "ចែកតង់ស្យុង", icon: "LucideSitemap" },
   { path: "/timer-555", nameKh: "IC 555", icon: "LucideClock" },
+  { path: "/op-amp", nameKh: "Op-Amp", icon: "LucideAudioLines" },
+  { path: "/regulator", nameKh: "Regulator", icon: "LucideBattery" },
+  { path: "/relay", nameKh: "Relay", icon: "LucideToggleRight" },
+  { path: "/battery", nameKh: "Battery", icon: "LucideBatteryFull" },
+  { path: "/transformer", nameKh: "Transformer", icon: "LucideRotateCw" },
   {
     path: "/history",
     nameKh: "ប្រវត្តិ",

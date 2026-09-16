@@ -189,5 +189,59 @@ const categories = [
       },
     ],
   },
+  {
+    name: "ICs និង Modules",
+    icon: "fa-solid fa-microchip text-purple-400",
+    tools: [
+      {
+        path: "/timer-555",
+        nameKh: "IC 555 Timer",
+        nameEn: "555 Timer",
+        icon: "LucideClock",
+        desc: "Astable, Monostable, Frequency",
+      },
+      {
+        path: "/op-amp",
+        nameKh: "Op-Amp",
+        nameEn: "Operational Amplifier",
+        icon: "LucideAudioLines",
+        desc: "Non-Inv, Inv, Filter",
+      },
+      {
+        path: "/regulator",
+        nameKh: "Voltage Regulator",
+        nameEn: "Regulator",
+        icon: "LucideBattery",
+        desc: "LM317, LM7805",
+      },
+    ],
+  },
+  {
+    name: "ថាមពល និង Magnetic",
+    icon: "fa-solid fa-bolt text-amber-400",
+    tools: [
+      {
+        path: "/relay",
+        nameKh: "Relay Driver",
+        nameEn: "Relay",
+        icon: "LucideToggleRight",
+        desc: "Driver Transistor & Flyback",
+      },
+      {
+        path: "/battery",
+        nameKh: "Battery Life",
+        nameEn: "Battery",
+        icon: "LucideBatteryFull",
+        desc: "Runtime & Charging Time",
+      },
+      {
+        path: "/transformer",
+        nameKh: "Transformer",
+        nameEn: "Transformer",
+        icon: "LucideRotateCw",
+        desc: "Turns Ratio & Power",
+      },
+    ],
+  },
 ];
 </script>
