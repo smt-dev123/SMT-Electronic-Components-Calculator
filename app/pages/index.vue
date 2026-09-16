@@ -243,5 +243,25 @@ const categories = [
       },
     ],
   },
+  {
+    name: "Engineering Tools",
+    icon: "LucideWrench",
+    tools: [
+      {
+        path: "/pid",
+        nameKh: "PID Controller",
+        nameEn: "PID Tuning",
+        icon: "LucideActivity",
+        desc: "ZN, Cohen-Coon, FOPDT Simulation",
+      },
+      {
+        path: "/pcb-trace",
+        nameKh: "PCB Trace Width",
+        nameEn: "PCB Trace",
+        icon: "LucideRuler",
+        desc: "IPC-2221 Width, Current, Voltage Drop",
+      },
+    ],
+  },
 ];
 </script>

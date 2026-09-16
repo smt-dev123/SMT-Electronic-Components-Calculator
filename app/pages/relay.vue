@@ -14,5 +14,6 @@ definePageMeta({
 
 useSeoMeta({
   title: "Relay Driver Calculator",
+  description: "Free online relay driver calculator",
 });
 </script>

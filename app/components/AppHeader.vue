@@ -247,6 +247,18 @@ const tabs = [
     nameEn: "Transformer",
     icon: "LucideRotateCw",
   },
+  {
+    path: "/pid",
+    nameKh: "PID Controller",
+    nameEn: "PID Tuning",
+    icon: "LucideActivity",
+  },
+  {
+    path: "/pcb-trace",
+    nameKh: "PCB Trace",
+    nameEn: "Trace",
+    icon: "LucideRuler",
+  },
 ];
 
 const isActive = (path: string) => route.path === path;
