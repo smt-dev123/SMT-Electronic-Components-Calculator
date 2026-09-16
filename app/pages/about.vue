@@ -78,14 +78,15 @@
         ទំនាក់ទំនង
       </h2>
       <p class="text-sm text-slate-400 mb-4">
-        មានសំណួរ ឬ اقتراح? ផ្ញើ email មកយើងខ្ញុំ
+        មានសំណួរ ឬ ការផ្ដល់យោបល់? ផ្ញើ email មកយើងខ្ញុំ
       </p>
       <a
-        href="mailto:contact@example.com"
+        href="https://smt-dev123.github.io/SMT-LinkProfile/"
+        target="_blank"
         class="inline-flex items-center gap-2 px-5 py-2.5 bg-cyan-500/10 text-cyan-400 border border-cyan-500/30 rounded-xl font-semibold hover:bg-cyan-500/20 transition-colors"
       >
         <i class="fa-solid fa-paper-plane"></i>
-        contact@example.com
+        ទំនាក់ទំនងខ្ញុំ
       </a>
     </div>
   </div>
