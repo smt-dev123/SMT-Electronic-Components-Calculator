@@ -8,7 +8,7 @@
 </template>
 
 <script setup lang="ts">
-import InductorCalculator from "~/components/calculators/InductorCalculator.vue";
+import InductorCalculator from "~/components/calculators/inductor/InductorCalculator.vue";
 
 definePageMeta({
   layout: "calculator",
