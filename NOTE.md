@@ -4,3 +4,8 @@
 # បញ្ហា
 
 - icons
+
+# Implimentations
+
+- បំបែក Components តាម Tabs
+- បន្ថែមការវាស់ (D, T, I,... )
