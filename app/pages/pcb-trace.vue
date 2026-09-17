@@ -3,7 +3,7 @@
 </template>
 
 <script setup lang="ts">
-import PcbTraceCalculator from "~/components/calculators/PcbTraceCalculator.vue";
+import PcbTraceCalculator from "~/components/calculators/pcb-trace/PcbTraceCalculator.vue";
 
 definePageMeta({
   layout: "calculator",

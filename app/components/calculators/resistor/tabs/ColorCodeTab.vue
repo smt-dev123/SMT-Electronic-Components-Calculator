@@ -5,6 +5,7 @@
       class="lg:col-span-7 glass-card rounded-2xl p-5 sm:p-6 shadow-2xl space-y-6 flex flex-col justify-between"
     >
       <div>
+        <!-- Header -->
         <div
           class="flex flex-wrap justify-between items-center gap-3 border-b border-slate-800 pb-4"
         >
@@ -20,6 +21,7 @@
             </p>
           </div>
 
+          <!-- Band Count Selector -->
           <div
             class="bg-slate-950 p-1 rounded-xl border border-slate-800 flex items-center gap-1"
           >
@@ -113,7 +115,7 @@
               </div>
             </div>
 
-            <!-- Color Circles -->
+            <!-- Color Circles Grid -->
             <div class="grid grid-cols-6 sm:grid-cols-8 md:grid-cols-12 gap-2">
               <button
                 v-for="color in filterColorsForBand(resistorBandsCount, pos)"
@@ -178,10 +180,79 @@
       </div>
     </div>
 
-    <!-- ===== Right: SMD + Reference ===== -->
+    <!-- ===== Right: Info Panel ===== -->
     <div class="lg:col-span-5 space-y-6">
-      <SmdResistorCard />
-      <ColorReferenceTable />
+      <div class="glass-card rounded-2xl p-5 sm:p-6 space-y-3">
+        <h4
+          class="text-xs font-bold uppercase text-slate-400 tracking-wider flex items-center gap-2"
+        >
+          <LucideBookOpen class="w-3.5 h-3.5 text-cyan-400" />
+          របៀបអានកូដពណ៌
+        </h4>
+
+        <div class="text-xs font-mono text-slate-400 space-y-2">
+          <p class="text-cyan-400 font-bold">📐 ចំនួនកង់:</p>
+          <ul class="space-y-1 text-slate-400">
+            <li>
+              • <span class="text-slate-300">4 Bands:</span> 2 Digits +
+              Multiplier + Tolerance
+            </li>
+            <li>
+              • <span class="text-slate-300">5 Bands:</span> 3 Digits +
+              Multiplier + Tolerance
+            </li>
+            <li>
+              • <span class="text-slate-300">6 Bands:</span> 3 Digits +
+              Multiplier + Tolerance + PPM
+            </li>
+          </ul>
+        </div>
+
+        <div
+          class="pt-3 border-t border-slate-800 text-xs font-mono text-slate-400"
+        >
+          <p class="text-amber-400 font-bold mb-1">📊 តម្លៃបច្ចុប្បន្ន:</p>
+          <div class="space-y-1">
+            <div class="flex justify-between">
+              <span>Bands:</span>
+              <span class="text-cyan-400">{{ resistorBandsCount }}</span>
+            </div>
+            <div class="flex justify-between">
+              <span>Resistance:</span>
+              <span class="text-cyan-400 font-bold">{{
+                formattedResistorValue
+              }}</span>
+            </div>
+            <div class="flex justify-between">
+              <span>Tolerance:</span>
+              <span class="text-amber-400">±{{ resistorTolerance }}%</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick Reference -->
+      <div class="glass-card rounded-2xl p-5 sm:p-6 space-y-3">
+        <h4
+          class="text-xs font-bold uppercase text-slate-400 tracking-wider flex items-center gap-2"
+        >
+          <LucideList class="w-3.5 h-3.5 text-amber-400" />
+          ពណ៌សង្ខេប
+        </h4>
+        <div class="grid grid-cols-3 gap-2 text-[10px] font-mono">
+          <div
+            v-for="c in quickColors"
+            :key="c.nameEn"
+            class="flex items-center gap-1.5 p-1.5 bg-slate-950 rounded-lg border border-slate-800"
+          >
+            <span
+              class="w-3 h-3 rounded-full border border-slate-600 shrink-0"
+              :style="{ backgroundColor: c.hex }"
+            ></span>
+            <span class="text-slate-400 truncate">{{ c.nameKh }}</span>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -194,8 +265,6 @@ import {
   type BandIndices,
 } from "~/composables/core/useResistorCalc";
 import { useCanvasAnimation } from "~/composables/useCanvasAnimation";
-import SmdResistorCard from "./SmdResistorCard.vue";
-import ColorReferenceTable from "./ColorReferenceTable.vue";
 
 // ===== Stores =====
 const historyStore = useHistoryStore();
@@ -212,7 +281,7 @@ const {
   getResistorRange,
 } = useResistorCalc();
 
-// ===== Local State (SSR-safe) =====
+// ===== Local State =====
 const resistorBandsCount = ref<4 | 5 | 6>(4);
 const selectedBands = ref<BandIndices>([1, 0, 0, 2, 10, 1]);
 const resistorCanvas = ref<HTMLCanvasElement | null>(null);
@@ -250,6 +319,8 @@ const toleranceText = computed(() => {
   }
   return base;
 });
+
+const quickColors = computed(() => colorMasterList.slice(0, 9));
 
 // ===== Actions =====
 const saveToHistory = () => {
@@ -314,7 +385,7 @@ register(() => {
   ctx.fill();
   ctx.shadowBlur = 0;
 
-  // Color bands
+  // Bands
   const indices = activeBandIndices.value;
   const bandCount = indices.length;
   const startX = bodyX + 30;
@@ -343,14 +414,9 @@ register(() => {
   }
 });
 
-// ===== Lifecycle (SSR-safe) =====
-onMounted(() => {
-  start();
-});
-
-onUnmounted(() => {
-  stop();
-});
+// ===== Lifecycle =====
+onMounted(() => start());
+onUnmounted(() => stop());
 </script>
 
 <style scoped>

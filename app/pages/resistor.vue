@@ -8,7 +8,7 @@
 </template>
 
 <script setup lang="ts">
-import ResistorCalculator from "~/components/calculators/ResistorCalculator.vue";
+import ResistorCalculator from "~/components/calculators/resistor/ResistorCalculator.vue";
 
 definePageMeta({
   layout: "calculator",
