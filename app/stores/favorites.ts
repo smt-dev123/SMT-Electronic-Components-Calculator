@@ -1,7 +1,16 @@
 export interface FavoritePart {
   partNumber: string;
   type: string;
-  category: "transistor" | "mosfet" | "diode" | "optocoupler";
+  category:
+    | "transistor"
+    | "mosfet"
+    | "diode"
+    | "optocoupler"
+    | "thyristor"
+    | "triac"
+    | "led"
+    | "capacitor"
+    | "other";
   addedAt: number;
 }
 

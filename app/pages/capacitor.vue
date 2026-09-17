@@ -8,7 +8,7 @@
 </template>
 
 <script setup lang="ts">
-import CapacitorCalculator from "~/components/calculators/CapacitorCalculator.vue";
+import CapacitorCalculator from "~/components/calculators/capacitor/CapacitorCalculator.vue";
 
 definePageMeta({
   layout: "calculator",
