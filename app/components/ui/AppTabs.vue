@@ -29,8 +29,6 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from "vue"; // Import ប្រសិនបើមិនបានប្រើ Auto-Import
-
 interface Tab {
   value: string;
   label: string;

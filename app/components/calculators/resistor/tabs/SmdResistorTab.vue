@@ -119,7 +119,7 @@
           >
             <p class="text-cyan-400 font-bold">3-Digit Code</p>
             <p class="text-slate-400">
-              ឧ. <span class="text-amber-400">103</span> = 10 × 10³ = 10 kΩ
+              ឧ. <span class="text-amber-400">103</span> = 10 x 10³ = 10 kΩ
             </p>
             <p class="text-slate-500 text-[10px]">2 ខ្ទង់ + មេគុណ</p>
           </div>
@@ -129,7 +129,7 @@
           >
             <p class="text-cyan-400 font-bold">4-Digit Code</p>
             <p class="text-slate-400">
-              ឧ. <span class="text-amber-400">4702</span> = 470 × 10² = 47 kΩ
+              ឧ. <span class="text-amber-400">4702</span> = 470 x 10² = 47 kΩ
             </p>
             <p class="text-slate-500 text-[10px]">3 ខ្ទង់ + មេគុណ</p>
           </div>
@@ -149,7 +149,7 @@
           >
             <p class="text-cyan-400 font-bold">EIA-96</p>
             <p class="text-slate-400">
-              ឧ. <span class="text-amber-400">01C</span> = 100 × 100 = 10 kΩ
+              ឧ. <span class="text-amber-400">01C</span> = 100 x 100 = 10 kΩ
             </p>
             <p class="text-slate-500 text-[10px]">2 ខ្ទង់ + អក្សរ (1%)</p>
           </div>
