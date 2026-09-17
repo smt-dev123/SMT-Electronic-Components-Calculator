@@ -1,4 +1,4 @@
-// ទិន្នន័យ Diode ទូទៅ
+// ===== Type Definition =====
 export interface DiodeSpec {
   partNumber: string;
   type: "rectifier" | "schottky" | "zener" | "led" | "switching" | "fast";
@@ -8,11 +8,15 @@ export interface DiodeSpec {
   iForward_max: number; // If max (A)
   iReverse: number; // Ir (µA)
   recoveryTime: number; // trr (ns)
+  powerMax: number; // Pmax (W)
+  capacitance: number; // Cj (pF)
   package: string;
+  application?: string; // ការប្រើប្រាស់
 }
 
+// ===== Diode Database =====
 export const commonDiodes: DiodeSpec[] = [
-  // Rectifier
+  // ===== Rectifier Diodes =====
   {
     partNumber: "1N4001",
     type: "rectifier",
@@ -22,7 +26,38 @@ export const commonDiodes: DiodeSpec[] = [
     iForward_max: 1,
     iReverse: 5,
     recoveryTime: 2000,
+    powerMax: 3,
+    capacitance: 15,
     package: "DO-41",
+    application: "General purpose rectification, protection",
+  },
+  {
+    partNumber: "1N4002",
+    type: "rectifier",
+    typeKh: "Rectifier",
+    vForward: 1.0,
+    vReverse: 100,
+    iForward_max: 1,
+    iReverse: 5,
+    recoveryTime: 2000,
+    powerMax: 3,
+    capacitance: 15,
+    package: "DO-41",
+    application: "General rectification",
+  },
+  {
+    partNumber: "1N4004",
+    type: "rectifier",
+    typeKh: "Rectifier",
+    vForward: 1.0,
+    vReverse: 400,
+    iForward_max: 1,
+    iReverse: 5,
+    recoveryTime: 2000,
+    powerMax: 3,
+    capacitance: 15,
+    package: "DO-41",
+    application: "Rectification, reverse protection",
   },
   {
     partNumber: "1N4007",
@@ -33,7 +68,10 @@ export const commonDiodes: DiodeSpec[] = [
     iForward_max: 1,
     iReverse: 5,
     recoveryTime: 2000,
+    powerMax: 3,
+    capacitance: 15,
     package: "DO-41",
+    application: "High voltage rectification",
   },
   {
     partNumber: "1N5408",
@@ -44,20 +82,10 @@ export const commonDiodes: DiodeSpec[] = [
     iForward_max: 3,
     iReverse: 5,
     recoveryTime: 2000,
+    powerMax: 6.25,
+    capacitance: 30,
     package: "DO-201",
-  },
-
-  // Schottky
-  {
-    partNumber: "1N5819",
-    type: "schottky",
-    typeKh: "Schottky",
-    vForward: 0.45,
-    vReverse: 40,
-    iForward_max: 1,
-    iReverse: 100,
-    recoveryTime: 0,
-    package: "DO-41",
+    application: "Power rectification",
   },
   {
     partNumber: "1N5822",
@@ -68,7 +96,40 @@ export const commonDiodes: DiodeSpec[] = [
     iForward_max: 3,
     iReverse: 100,
     recoveryTime: 0,
+    powerMax: 6,
+    capacitance: 200,
     package: "DO-201",
+    application: "Switching power supply, high frequency",
+  },
+
+  // ===== Schottky Diodes =====
+  {
+    partNumber: "1N5817",
+    type: "schottky",
+    typeKh: "Schottky",
+    vForward: 0.45,
+    vReverse: 20,
+    iForward_max: 1,
+    iReverse: 100,
+    recoveryTime: 0,
+    powerMax: 0.5,
+    capacitance: 125,
+    package: "DO-41",
+    application: "Low voltage rectification",
+  },
+  {
+    partNumber: "1N5819",
+    type: "schottky",
+    typeKh: "Schottky",
+    vForward: 0.45,
+    vReverse: 40,
+    iForward_max: 1,
+    iReverse: 100,
+    recoveryTime: 0,
+    powerMax: 0.5,
+    capacitance: 120,
+    package: "DO-41",
+    application: "High frequency switching, reverse protection",
   },
   {
     partNumber: "SS34",
@@ -79,45 +140,141 @@ export const commonDiodes: DiodeSpec[] = [
     iForward_max: 3,
     iReverse: 100,
     recoveryTime: 0,
-    package: "SMA",
+    powerMax: 2.5,
+    capacitance: 180,
+    package: "SMA/DO-214AC",
+    application: "SMD switching power",
+  },
+  {
+    partNumber: "SS14",
+    type: "schottky",
+    typeKh: "Schottky",
+    vForward: 0.5,
+    vReverse: 40,
+    iForward_max: 1,
+    iReverse: 100,
+    recoveryTime: 0,
+    powerMax: 0.5,
+    capacitance: 110,
+    package: "SMA/DO-214AC",
+    application: "SMD low power switching",
+  },
+  {
+    partNumber: "MBR20100",
+    type: "schottky",
+    typeKh: "Schottky",
+    vForward: 0.75,
+    vReverse: 100,
+    iForward_max: 20,
+    iReverse: 100,
+    recoveryTime: 0,
+    powerMax: 100,
+    capacitance: 600,
+    package: "TO-220",
+    application: "High current rectification",
   },
 
-  // Zener
+  // ===== Zener Diodes =====
   {
-    partNumber: "1N4733",
+    partNumber: "1N4728A",
     type: "zener",
-    typeKh: "Zener",
+    typeKh: "Zener 3.3V",
+    vForward: 0.7,
+    vReverse: 3.3,
+    iForward_max: 0.138,
+    iReverse: 100,
+    recoveryTime: 0,
+    powerMax: 1,
+    capacitance: 300,
+    package: "DO-41",
+    application: "Voltage reference 3.3V",
+  },
+  {
+    partNumber: "1N4733A",
+    type: "zener",
+    typeKh: "Zener 5.1V",
     vForward: 0.7,
     vReverse: 5.1,
-    iForward_max: 0.049,
+    iForward_max: 0.098,
     iReverse: 10,
     recoveryTime: 0,
+    powerMax: 1,
+    capacitance: 250,
     package: "DO-41",
+    application: "Voltage reference 5.1V",
   },
   {
-    partNumber: "1N4735",
+    partNumber: "1N4735A",
     type: "zener",
-    typeKh: "Zener",
+    typeKh: "Zener 6.2V",
     vForward: 0.7,
     vReverse: 6.2,
-    iForward_max: 0.041,
+    iForward_max: 0.081,
     iReverse: 10,
     recoveryTime: 0,
+    powerMax: 1,
+    capacitance: 200,
     package: "DO-41",
+    application: "Voltage reference 6.2V",
   },
   {
-    partNumber: "1N4742",
+    partNumber: "1N4742A",
     type: "zener",
-    typeKh: "Zener",
+    typeKh: "Zener 12V",
     vForward: 0.7,
     vReverse: 12,
     iForward_max: 0.021,
     iReverse: 5,
     recoveryTime: 0,
+    powerMax: 1,
+    capacitance: 110,
     package: "DO-41",
+    application: "Voltage regulation 12V",
+  },
+  {
+    partNumber: "1N4749A",
+    type: "zener",
+    typeKh: "Zener 24V",
+    vForward: 0.7,
+    vReverse: 24,
+    iForward_max: 0.0105,
+    iReverse: 5,
+    recoveryTime: 0,
+    powerMax: 1,
+    capacitance: 60,
+    package: "DO-41",
+    application: "Voltage regulation 24V",
+  },
+  {
+    partNumber: "BZX55C5V1",
+    type: "zener",
+    typeKh: "Zener 5.1V",
+    vForward: 0.7,
+    vReverse: 5.1,
+    iForward_max: 0.098,
+    iReverse: 5,
+    recoveryTime: 0,
+    powerMax: 0.5,
+    capacitance: 200,
+    package: "DO-35",
+    application: "Low power voltage reference",
+  },
+  {
+    partNumber: "BZX84C12",
+    type: "zener",
+    typeKh: "Zener 12V SMD",
+    vForward: 0.9,
+    vReverse: 12,
+    iForward_max: 0.021,
+    iReverse: 1,
+    recoveryTime: 0,
+    powerMax: 0.3,
+    capacitance: 85,
+    package: "SOT-23",
+    application: "SMD voltage regulation",
   },
 
-  // Switching
+  // ===== Switching Diodes =====
   {
     partNumber: "1N4148",
     type: "switching",
@@ -127,7 +284,24 @@ export const commonDiodes: DiodeSpec[] = [
     iForward_max: 0.2,
     iReverse: 0.025,
     recoveryTime: 4,
+    powerMax: 0.5,
+    capacitance: 4,
     package: "DO-35",
+    application: "Signal switching, small signal",
+  },
+  {
+    partNumber: "1N4148W",
+    type: "switching",
+    typeKh: "Switching SMD",
+    vForward: 0.72,
+    vReverse: 100,
+    iForward_max: 0.3,
+    iReverse: 0.05,
+    recoveryTime: 4,
+    powerMax: 0.4,
+    capacitance: 4,
+    package: "SOD-123",
+    application: "SMD signal switching",
   },
   {
     partNumber: "1N914",
@@ -138,10 +312,41 @@ export const commonDiodes: DiodeSpec[] = [
     iForward_max: 0.075,
     iReverse: 0.025,
     recoveryTime: 4,
+    powerMax: 0.5,
+    capacitance: 4,
     package: "DO-35",
+    application: "High speed switching",
+  },
+  {
+    partNumber: "BAV99",
+    type: "switching",
+    typeKh: "Dual Switching SMD",
+    vForward: 0.715,
+    vReverse: 70,
+    iForward_max: 0.215,
+    iReverse: 0.03,
+    recoveryTime: 6,
+    powerMax: 0.35,
+    capacitance: 1.5,
+    package: "SOT-23",
+    application: "Dual series switching",
+  },
+  {
+    partNumber: "BAT54",
+    type: "schottky",
+    typeKh: "Schottky SMD",
+    vForward: 0.32,
+    vReverse: 30,
+    iForward_max: 0.2,
+    iReverse: 2,
+    recoveryTime: 5,
+    powerMax: 0.15,
+    capacitance: 10,
+    package: "SOT-23",
+    application: "Low voltage SMD switching",
   },
 
-  // Fast recovery
+  // ===== Fast Recovery Diodes =====
   {
     partNumber: "1N4937",
     type: "fast",
@@ -151,7 +356,10 @@ export const commonDiodes: DiodeSpec[] = [
     iForward_max: 1,
     iReverse: 5,
     recoveryTime: 200,
+    powerMax: 3,
+    capacitance: 25,
     package: "DO-41",
+    application: "Switching power supplies",
   },
   {
     partNumber: "UF4007",
@@ -162,12 +370,43 @@ export const commonDiodes: DiodeSpec[] = [
     iForward_max: 1,
     iReverse: 5,
     recoveryTime: 75,
+    powerMax: 3,
+    capacitance: 20,
     package: "DO-41",
+    application: "High frequency rectification",
+  },
+  {
+    partNumber: "UF4004",
+    type: "fast",
+    typeKh: "Ultra Fast",
+    vForward: 1.0,
+    vReverse: 400,
+    iForward_max: 1,
+    iReverse: 5,
+    recoveryTime: 50,
+    powerMax: 3,
+    capacitance: 20,
+    package: "DO-41",
+    application: "Fast switching",
+  },
+  {
+    partNumber: "FR107",
+    type: "fast",
+    typeKh: "Fast Recovery",
+    vForward: 1.3,
+    vReverse: 1000,
+    iForward_max: 1,
+    iReverse: 5,
+    recoveryTime: 500,
+    powerMax: 3,
+    capacitance: 15,
+    package: "DO-41",
+    application: "Fast rectification",
   },
 
-  // LED
+  // ===== LEDs =====
   {
-    partNumber: "LED-RED",
+    partNumber: "LED-RED-5MM",
     type: "led",
     typeKh: "LED ក្រហម",
     vForward: 2.0,
@@ -175,10 +414,13 @@ export const commonDiodes: DiodeSpec[] = [
     iForward_max: 0.02,
     iReverse: 10,
     recoveryTime: 0,
-    package: "T-1¾",
+    powerMax: 0.1,
+    capacitance: 50,
+    package: "T-1¾ (5mm)",
+    application: "Indicators, displays",
   },
   {
-    partNumber: "LED-GREEN",
+    partNumber: "LED-GREEN-5MM",
     type: "led",
     typeKh: "LED បៃតង",
     vForward: 2.2,
@@ -186,10 +428,13 @@ export const commonDiodes: DiodeSpec[] = [
     iForward_max: 0.02,
     iReverse: 10,
     recoveryTime: 0,
-    package: "T-1¾",
+    powerMax: 0.1,
+    capacitance: 50,
+    package: "T-1¾ (5mm)",
+    application: "Indicators",
   },
   {
-    partNumber: "LED-BLUE",
+    partNumber: "LED-BLUE-5MM",
     type: "led",
     typeKh: "LED ខៀវ",
     vForward: 3.2,
@@ -197,12 +442,130 @@ export const commonDiodes: DiodeSpec[] = [
     iForward_max: 0.02,
     iReverse: 10,
     recoveryTime: 0,
-    package: "T-1¾",
+    powerMax: 0.1,
+    capacitance: 100,
+    package: "T-1¾ (5mm)",
+    application: "Indicators, blue displays",
+  },
+  {
+    partNumber: "LED-WHITE-5MM",
+    type: "led",
+    typeKh: "LED ស",
+    vForward: 3.2,
+    vReverse: 5,
+    iForward_max: 0.02,
+    iReverse: 10,
+    recoveryTime: 0,
+    powerMax: 0.1,
+    capacitance: 100,
+    package: "T-1¾ (5mm)",
+    application: "Lighting, indicators",
+  },
+  {
+    partNumber: "LED-YELLOW-5MM",
+    type: "led",
+    typeKh: "LED លឿង",
+    vForward: 2.1,
+    vReverse: 5,
+    iForward_max: 0.02,
+    iReverse: 10,
+    recoveryTime: 0,
+    powerMax: 0.1,
+    capacitance: 50,
+    package: "T-1¾ (5mm)",
+    application: "Indicators",
+  },
+  {
+    partNumber: "WS2812B",
+    type: "led",
+    typeKh: "RGB LED Smart",
+    vForward: 5.0,
+    vReverse: 5,
+    iForward_max: 0.06,
+    iReverse: 1,
+    recoveryTime: 0,
+    powerMax: 0.3,
+    capacitance: 100,
+    package: "SMD 5050",
+    application: "Addressable RGB LED",
+  },
+
+  // ===== Power Diodes =====
+  {
+    partNumber: "1N5820",
+    type: "schottky",
+    typeKh: "Schottky Power",
+    vForward: 0.475,
+    vReverse: 20,
+    iForward_max: 3,
+    iReverse: 100,
+    recoveryTime: 0,
+    powerMax: 6,
+    capacitance: 200,
+    package: "DO-201AD",
+    application: "Power switching",
+  },
+  {
+    partNumber: "MUR1560",
+    type: "fast",
+    typeKh: "Ultra Fast Power",
+    vForward: 1.5,
+    vReverse: 600,
+    iForward_max: 15,
+    iReverse: 10,
+    recoveryTime: 60,
+    powerMax: 100,
+    capacitance: 150,
+    package: "TO-220",
+    application: "High power switching",
+  },
+  {
+    partNumber: "BYV26E",
+    type: "fast",
+    typeKh: "Ultra Fast HV",
+    vForward: 2.5,
+    vReverse: 1000,
+    iForward_max: 1,
+    iReverse: 5,
+    recoveryTime: 75,
+    powerMax: 10,
+    capacitance: 25,
+    package: "SOD-57",
+    application: "High voltage fast switching",
   },
 ];
 
+// ===== Composable =====
 export const useDiode = () => {
-  // គណនា Diode សម្រាប់ Rectifier
+  // Filter by type
+  const getByType = (type: DiodeSpec["type"]) => {
+    return commonDiodes.filter((d) => d.type === type);
+  };
+
+  // Get unique types
+  const getTypes = (): DiodeSpec["type"][] => {
+    return [...new Set(commonDiodes.map((d) => d.type))];
+  };
+
+  // Find by part number
+  const findByPartNumber = (partNumber: string) => {
+    return commonDiodes.find(
+      (d) => d.partNumber.toLowerCase() === partNumber.toLowerCase(),
+    );
+  };
+
+  // Search by part number
+  const search = (query: string) => {
+    const q = query.toLowerCase().trim();
+    if (!q) return commonDiodes;
+    return commonDiodes.filter(
+      (d) =>
+        d.partNumber.toLowerCase().includes(q) ||
+        d.typeKh.toLowerCase().includes(q),
+    );
+  };
+
+  // Calculate rectifier requirements
   const calculateRectifier = (
     vIn: number,
     iLoad: number,
@@ -213,12 +576,12 @@ export const useDiode = () => {
     return {
       requiredVReverse: vIn * safetyFactor,
       requiredIForward: iLoad * safetyFactor,
-      vReverseFormatted: vIn * safetyFactor + " V",
+      vReverseFormatted: (vIn * safetyFactor).toFixed(2) + " V",
       iForwardFormatted: (iLoad * safetyFactor).toFixed(2) + " A",
     };
   };
 
-  // គណនា Zener Diode (Voltage Regulator)
+  // Calculate Zener resistor
   const calculateZenerResistor = (
     vIn: number,
     vZener: number,
@@ -226,71 +589,60 @@ export const useDiode = () => {
   ) => {
     if (vIn <= vZener || iLoad < 0) return null;
 
-    // ជ្រើសរើស Iz ត្រឹមត្រូវ (ធម្មតា 10% នៃ iLoad ឬ 5mA អប្បបរមា)
     const iZ_min = Math.max(iLoad * 0.1, 0.005);
     const iZ_max = iLoad * 0.5;
 
-    // គណនា R ជាមួយ iZ_max (ពេល Load តូច)
     const r_min = (vIn - vZener) / (iZ_max + iLoad);
-    // គណនា R ជាមួយ iZ_min (ពេល Load ធំ)
     const r_max = (vIn - vZener) / (iZ_min + iLoad);
-
     const rRecommended = (r_min + r_max) / 2;
 
-    // អានុភាព
-    const pResistor = Math.pow(vIn - vZener, 2) / rRecommended;
-    const pZener = vZener * iZ_max;
+    // គណនា Power
+    const pResistor = Math.pow(vIn - vZener, 2) / rRecommended; // អានុភាព R
+    const pZener = vZener * iZ_max; // អានុភាព Zener
 
     return {
       rMin: r_min,
       rMax: r_max,
       rRecommended,
       rFormatted: formatOhm(rRecommended),
-      pResistor: pResistor,
+      rMinFormatted: formatOhm(r_min),
+      rMaxFormatted: formatOhm(r_max),
+      pResistor,
       pResistorFormatted: formatWatt(pResistor),
-      pZener: pZener,
+      pZener,
       pZenerFormatted: formatWatt(pZener),
       iZmin: iZ_min,
       iZmax: iZ_max,
     };
   };
 
-  // គណនា Diode Bridge Rectifier
+  // Calculate bridge rectifier
   const calculateBridge = (vAcIn: number, iLoad: number) => {
     if (vAcIn <= 0 || iLoad <= 0) return null;
 
-    // តង់ស្យុងកំពូល (Peak) = Vrms × √2
     const vPeak = vAcIn * Math.SQRT2;
-    // តង់ស្យុង DC ជាមធ្យម (គ្មាន Filter) = 2Vpeak / π
     const vDcAvg = (2 * vPeak) / Math.PI;
-    // តង់ស្យុង DC ជាមួយ 2 diode drops
     const vDcReal = vDcAvg - 1.4;
 
-    // ប្រេកង់ ripple = 2 × ប្រេកង់ AC
-    const rippleFreq = 100; // សម្រាប់ 50Hz → 100Hz
-
     return {
-      vPeak: vPeak,
+      vPeak,
       vPeakFormatted: vPeak.toFixed(2) + " V",
-      vDcAvg: vDcAvg,
+      vDcAvg,
       vDcFormatted: vDcAvg.toFixed(2) + " V",
-      vDcReal: vDcReal,
+      vDcReal,
       vDcRealFormatted: vDcReal.toFixed(2) + " V",
-      vReverseEach: vPeak,
       vReverseFormatted: vPeak.toFixed(2) + " V",
-      rippleFreq: rippleFreq,
     };
   };
 
-  // គណនា Filter Capacitor សម្រាប់ Rectifier
+  // Calculate filter capacitor
   const calculateFilterCap = (
     iLoad: number,
     rippleVoltage: number,
     frequency: number = 100,
   ) => {
-    if (iLoad <= 0 || rippleVoltage <= 0 || frequency <= 0) return null;
+    if (iLoad <= 0 || rippleVoltage <= 0) return null;
 
-    // C = I / (2 × f × Vripple)  (សម្រាប់ full-wave)
     const c = iLoad / (2 * frequency * rippleVoltage);
 
     return {
@@ -305,7 +657,7 @@ export const useDiode = () => {
     };
   };
 
-  // បម្លែងឯកតា
+  // Helpers
   const formatOhm = (ohms: number): string => {
     if (ohms >= 1e6) return (ohms / 1e6).toFixed(2) + " MΩ";
     if (ohms >= 1e3) return (ohms / 1e3).toFixed(2) + " kΩ";
@@ -320,6 +672,10 @@ export const useDiode = () => {
 
   return {
     commonDiodes,
+    getByType,
+    getTypes,
+    findByPartNumber,
+    search,
     calculateRectifier,
     calculateZenerResistor,
     calculateBridge,
