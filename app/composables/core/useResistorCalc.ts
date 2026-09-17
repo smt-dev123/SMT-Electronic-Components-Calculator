@@ -324,6 +324,225 @@ export const useResistorCalc = () => {
     return { value: "កូដមិនត្រឹមត្រូវ", details: "Invalid Format" };
   };
 
+  // ===== Series / Parallel Calculations =====
+
+  /**
+   * គណនា Resistors សេរី (Series)
+   * R_total = R1 + R2 + R3 + ...
+   */
+  const calculateSeries = (resistors: number[]) => {
+    const valid = resistors.filter((r) => r > 0);
+    if (valid.length === 0) return null;
+
+    const total = valid.reduce((sum, r) => sum + r, 0);
+    return {
+      total,
+      totalFormatted: formatResistance(total),
+      count: valid.length,
+    };
+  };
+
+  /**
+   * គណនា Resistors ប៉ារ៉ាឡែល (Parallel)
+   * 1/R_total = 1/R1 + 1/R2 + 1/R3 + ...
+   * ឬ R_total = (R1 × R2) / (R1 + R2) សម្រាប់ ២ តែប៉ុណ្ណោះ
+   */
+  const calculateParallel = (resistors: number[]) => {
+    const valid = resistors.filter((r) => r > 0);
+    if (valid.length === 0) return null;
+
+    const invSum = valid.reduce((sum, r) => sum + 1 / r, 0);
+    const total = invSum > 0 ? 1 / invSum : 0;
+
+    return {
+      total,
+      totalFormatted: formatResistance(total),
+      count: valid.length,
+    };
+  };
+
+  /**
+   * គណនា Series-Parallel Combination
+   * ឧ. R1 សេរីជាមួយ (R2 ប៉ារ៉ាឡែល R3)
+   */
+  const calculateCombination = (
+    seriesResistors: number[],
+    parallelResistors: number[],
+  ) => {
+    const seriesTotal = seriesResistors
+      .filter((r) => r > 0)
+      .reduce((sum, r) => sum + r, 0);
+
+    const parallelValid = parallelResistors.filter((r) => r > 0);
+    let parallelTotal = 0;
+    if (parallelValid.length > 0) {
+      const invSum = parallelValid.reduce((sum, r) => sum + 1 / r, 0);
+      parallelTotal = invSum > 0 ? 1 / invSum : 0;
+    }
+
+    const total = seriesTotal + parallelTotal;
+
+    return {
+      seriesTotal,
+      seriesFormatted: formatResistance(seriesTotal),
+      parallelTotal,
+      parallelFormatted: formatResistance(parallelTotal),
+      total,
+      totalFormatted: formatResistance(total),
+    };
+  };
+
+  /**
+   * ជ្រើសរើស Resistor Combination ពី Standard Values
+   * ដើម្បីទទួលបាន Target Resistance ជិតបំផុត
+   */
+  const findCombination = (
+    target: number,
+    mode: "series" | "parallel" | "both" = "both",
+  ) => {
+    // E24 Standard Values
+    const e24 = [
+      1.0, 1.1, 1.2, 1.3, 1.5, 1.6, 1.8, 2.0, 2.2, 2.4, 2.7, 3.0, 3.3, 3.6, 3.9,
+      4.3, 4.7, 5.1, 5.6, 6.2, 6.8, 7.5, 8.2, 9.1,
+    ];
+
+    const generateValues = (): number[] => {
+      const values: number[] = [];
+      for (let decade = -1; decade <= 5; decade++) {
+        const multiplier = Math.pow(10, decade);
+        for (const base of e24) {
+          values.push(base * multiplier);
+        }
+      }
+      return values.sort((a, b) => a - b);
+    };
+
+    const values = generateValues();
+    const targetTolerance = 0.05; // 5%
+
+    let best: {
+      r1: number;
+      r2: number;
+      value: number;
+      error: number;
+      errorPercent: number;
+      mode: string;
+    } | null = null;
+
+    // Series
+    if (mode === "series" || mode === "both") {
+      for (let i = 0; i < values.length; i++) {
+        for (let j = i; j < values.length; j++) {
+          const r1 = values[i]!;
+          const r2 = values[j]!;
+          const sum = r1 + r2;
+          const error = Math.abs(sum - target);
+          if (!best || error < best.error) {
+            best = {
+              r1,
+              r2,
+              value: sum,
+              error,
+              errorPercent: (error / target) * 100,
+              mode: "series",
+            };
+          }
+        }
+      }
+    }
+
+    // Parallel
+    if (mode === "parallel" || mode === "both") {
+      for (let i = 0; i < values.length; i++) {
+        for (let j = i; j < values.length; j++) {
+          const r1 = values[i]!;
+          const r2 = values[j]!;
+          const parallel = (r1 * r2) / (r1 + r2);
+          const error = Math.abs(parallel - target);
+          if (!best || error < best.error) {
+            best = {
+              r1,
+              r2,
+              value: parallel,
+              error,
+              errorPercent: (error / target) * 100,
+              mode: "parallel",
+            };
+          }
+        }
+      }
+    }
+
+    if (!best) return null;
+
+    return {
+      ...best,
+      valueFormatted: formatResistance(best.value),
+      r1Formatted: formatResistance(best.r1),
+      r2Formatted: formatResistance(best.r2),
+      errorPercentFormatted: best.errorPercent.toFixed(3) + " %",
+      isWithinTolerance: best.errorPercent <= targetTolerance * 100,
+    };
+  };
+
+  /**
+   * គណនា Power Dissipation ក្នុង Resistor នីមួយៗ
+   */
+  const calculatePowerDistribution = (
+    resistors: number[],
+    mode: "series" | "parallel",
+    totalVoltage: number = 0,
+    totalCurrent: number = 0,
+  ) => {
+    if (resistors.length === 0) return null;
+
+    const results: {
+      resistance: number;
+      voltage: number;
+      current: number;
+      power: number;
+    }[] = [];
+
+    if (mode === "series" && totalVoltage > 0) {
+      const totalR = resistors.reduce((sum, r) => sum + r, 0);
+      const current = totalVoltage / totalR;
+      for (const r of resistors) {
+        const voltage = current * r;
+        const power = voltage * current;
+        results.push({ resistance: r, voltage, current, power });
+      }
+    } else if (mode === "parallel" && totalCurrent > 0) {
+      const invSum = resistors.reduce((sum, r) => sum + 1 / r, 0);
+      const totalR = invSum > 0 ? 1 / invSum : 0;
+      const voltage = totalCurrent * totalR;
+      for (const r of resistors) {
+        const current = voltage / r;
+        const power = voltage * current;
+        results.push({ resistance: r, voltage, current, power });
+      }
+    }
+
+    return {
+      results: results.map((r) => ({
+        resistance: r.resistance,
+        resistanceFormatted: formatResistance(r.resistance),
+        voltage: r.voltage,
+        voltageFormatted: r.voltage.toFixed(3) + " V",
+        current: r.current,
+        currentFormatted:
+          r.current >= 1
+            ? r.current.toFixed(3) + " A"
+            : (r.current * 1000).toFixed(2) + " mA",
+        power: r.power,
+        powerFormatted:
+          r.power >= 1
+            ? r.power.toFixed(3) + " W"
+            : (r.power * 1000).toFixed(2) + " mW",
+      })),
+    };
+  };
+
+  // ===== បន្ថែមទៅ return =====
   return {
     colorMasterList,
     formatResistance,
@@ -335,5 +554,10 @@ export const useResistorCalc = () => {
     getBandTitle,
     getResistorRange,
     parseSmdCode,
+    calculateSeries,
+    calculateParallel,
+    calculateCombination,
+    findCombination,
+    calculatePowerDistribution,
   };
 };
